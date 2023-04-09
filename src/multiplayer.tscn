@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://djqj7nx82ewev"]
+
+[ext_resource type="Script" path="res://src/multiplayer.gd" id="1_um772"]
+
+[node name="Multiplayer" type="Node"]
+script = ExtResource("1_um772")
+
+[node name="Level" type="Node" parent="."]
+
+[node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://src/level.tscn")
+spawn_path = NodePath("../Level")
+spawn_limit = 1
+
+[node name="UI" type="Control" parent="."]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 129.0
+offset_top = 38.0
+offset_right = -120.0
+offset_bottom = 153.0
+grow_horizontal = 2
+
+[node name="Net" type="VBoxContainer" parent="UI"]
+layout_mode = 2
+offset_right = 891.0
+offset_bottom = 105.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="UI/Net"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Websocket Template"
+horizontal_alignment = 1
+
+[node name="Options" type="HBoxContainer" parent="UI/Net"]
+layout_mode = 2
+
+[node name="Host" type="Button" parent="UI/Net/Options"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Host"
+
+[node name="Connect" type="Button" parent="UI/Net/Options"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Connect"
+
+[node name="Remote" type="TextEdit" parent="UI/Net/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "localhost"
+placeholder_text = "Remote IP"
+
+[connection signal="pressed" from="UI/Net/Options/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="UI/Net/Options/Connect" to="." method="_on_connect_pressed"]
