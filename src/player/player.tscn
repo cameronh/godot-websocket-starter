@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://d0g4dx3soceb2"]
+
+[ext_resource type="Script" path="res://src/player/player.gd" id="1_h3r5p"]
+[ext_resource type="Script" path="res://src/player/player_input.gd" id="2_n1lga"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dhra5"]
+properties/0/path = NodePath(".:player")
+properties/0/spawn = true
+properties/0/sync = false
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath("Name:text")
+properties/2/spawn = true
+properties/2/sync = true
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lhde7"]
+properties/0/path = NodePath("PlayerInput:direction")
+properties/0/spawn = false
+properties/0/sync = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ev6i3"]
+size = Vector2(40, 40)
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+platform_on_leave = 2
+script = ExtResource("1_h3r5p")
+
+[node name="ServerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_dhra5")
+
+[node name="PlayerInput" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_lhde7")
+script = ExtResource("2_n1lga")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ev6i3")
+
+[node name="Shape" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.168627, 0.337255, 1, 1)
+
+[node name="Name" type="Label" parent="."]
+offset_left = -41.0
+offset_top = -43.0
+offset_right = 41.0
+offset_bottom = -23.0
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
